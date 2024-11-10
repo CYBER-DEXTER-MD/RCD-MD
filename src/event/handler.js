@@ -39,11 +39,6 @@ const Handler = async (chatUpdate, sock, logger) => {
         const prefix = prefixMatch ? prefixMatch[0] : '/';
         const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
         const text = m.body.slice(prefix.length + cmd.length).trim();
-
-        if (m.key && m.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
-            await sock.readMessages([m.key]);
-        }
-
         const botNumber = await sock.decodeJid(sock.user.id);
         const ownerNumber = config.OWNER_NUMBER + '@s.whatsapp.net';
         let isCreator = false;
@@ -63,7 +58,7 @@ const Handler = async (chatUpdate, sock, logger) => {
         await handleAntilink(m, sock, logger, isBotAdmins, isAdmins, isCreator);
 
         const { isGroup, type, sender, from, body } = m;
-        console.log(m);
+      //  console.log(m);
 
         const pluginDir = path.join(__dirname, '..', 'plugin');
         const pluginFiles = await fs.readdir(pluginDir);
